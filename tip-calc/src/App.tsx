@@ -1,8 +1,18 @@
-import './App.css'
-import Calculator from './components/Calculator';
+import './App.css';
+import ChildComponent from './components/ChildComponent';
 
-function App() {
-  return <Calculator />
+export default function App() {
+  return (
+    <div style={styles.container}>
+      <ChildComponent />
+    </div>
+  );
 }
 
-export default App;
+const styles = {
+  container: {
+    height: 200,
+    width: 200,
+    border: '5px solid blue',
+  },
+};
