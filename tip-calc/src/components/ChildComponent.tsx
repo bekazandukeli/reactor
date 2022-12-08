@@ -1,20 +1,15 @@
 import React, { useRef } from 'react'
 
- function ChildComponent(props: {count: number}) {
+ function ChildComponent(props: {handleSomething: () => void}) {
   const renderCount = useRef(0);
   console.log('Child Render Count', ++renderCount.current);
 
   return (
-    <div style={styles.container}>Child count {props.count}</div>
+    <div style={styles.container}>Child</div>
   )
 }
 
-export default React.memo(ChildComponent, (prevProps, nextProps) => {
-  if (prevProps.count === nextProps.count) {
-    return true;
-  }
-  return false;
-});
+export default React.memo(ChildComponent);
 
 const styles = {
   container: {
