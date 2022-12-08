@@ -7,7 +7,7 @@ export default function App() {
 
   const handleSomething = useCallback(() => {}, []);
 
-  //  აკეთებს იგივეს რასაც useCallback
+  //  ამ შემთხვევაში აკეთებს იგივეს რასაც useCallback
   const memoizedValue = useMemo(() => {
     return () => {}
   }, []);
