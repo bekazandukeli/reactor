@@ -1,14 +1,21 @@
+import { useContext } from "react";
 import { useLocation } from "react-router-dom"
+import { UserContext } from "../NewApp";
 
 export default function HomePage() {
   const location = useLocation();
+  const context = useContext(UserContext);
 
-  console.log(location.state?.name);
+  console.log(location);
 
   return (
     <div>
       HomePage
-      <p>{location.state?.name}</p>
+      <button onClick={() => {
+        context?.setIsLoggedIn(current => !current)
+      }}>
+        {context?.isLoggedIn ? 'log out' : 'log in'}
+      </button>
     </div>
   )
 }
