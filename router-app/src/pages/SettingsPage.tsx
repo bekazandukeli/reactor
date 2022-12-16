@@ -1,6 +1,6 @@
 import React, { useContext, useLayoutEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
-import { UserContext } from '../NewApp';
+import { UserContext } from '../App';
 
 export default function SettingsPage() {
   const context = useContext(UserContext);

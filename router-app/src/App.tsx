@@ -1,52 +1,61 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { createContext, useState } from 'react'
+import {RouterProvider, createBrowserRouter, createRoutesFromElements, Route} from 'react-router-dom';
+import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import BeginningPage from './pages/BeginningPage';
 import ContactPage from './pages/ContactPage';
 import FaqPage from './pages/FaqPage';
-import HomePage from './pages/HomePage';
 import QuestionPage from './pages/QuestionPage';
+import Root from './pages/Root';
+import SettingsPage from './pages/SettingsPage';
+import UsersPage from './pages/UsersPage';
 
-function App() {
+
+type UserInfo = {
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+};
+
+export const UserContext = createContext<UserInfo | null>(null);
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<Root />}>
+      <Route index element={<HomePage />} />
+      <Route path="about">
+        <Route index element={<AboutPage />} />
+        <Route path='beginning' element={<BeginningPage />} />
+      </Route>
+      <Route path='contact' element={<ContactPage />} />
+      <Route 
+        path='faq/:questionId' 
+        element={<QuestionPage />} 
+        loader={async ({params}) => {
+          return fetch(`https://jsonplaceholder.typicode.com/posts/${params.questionId}`);
+        }}
+      />
+      <Route path='faq' element={<FaqPage />} />
+      <Route path='settings' element={<SettingsPage />} />
+      <Route 
+        path='users'
+        element={<UsersPage />} 
+        loader={async () => {
+          return fetch('https://jsonplaceholder.typicode.com/users');
+        }}
+      />
+    </Route>
+  )
+);
+
+export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
   return (
-    <>
-      <header>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <ul>
-                <li>
-                  <Link to="/about/beginning">Beginning</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-            <li>
-              <Link to="/faq">FAQ</Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path="about">
-          <Route index={true} element={<AboutPage />} />
-          <Route path='beginning' element={<BeginningPage />} />
-        </Route>
-        <Route path='contact' element={<ContactPage />} />
-        <Route path='faq' element={<FaqPage />} />
-        <Route path='faq/:questionId' element={<QuestionPage />} />
-      </Routes>
-      <footer>Footer</footer>
-    </>
-  );
+    <UserContext.Provider value={{
+      isLoggedIn: isLoggedIn,
+      setIsLoggedIn
+    }}>
+      <RouterProvider router={router}  />
+    </UserContext.Provider>
+  )
 }
-
-export default App;

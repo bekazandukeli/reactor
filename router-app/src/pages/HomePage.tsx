@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useLocation } from "react-router-dom"
-import { UserContext } from "../NewApp";
+import { UserContext } from "../App";
 
 export default function HomePage() {
   const location = useLocation();
