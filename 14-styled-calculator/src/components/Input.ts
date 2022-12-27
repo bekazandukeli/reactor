@@ -30,6 +30,7 @@ export const Input = styled.input<Props>`
   font-size: 24px;
   text-align: right;
   color: ${({ theme }) => theme.colors.cyan.dark};
+  width: calc(100% - 17px);
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.cyan.dark};
