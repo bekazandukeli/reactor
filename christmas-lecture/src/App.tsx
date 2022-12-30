@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import './App.css';
+import TimerComponent from './components/TimerComponent';
 import useCounter from './hooks/useCounter';
 import useKeyPress from './hooks/useKeyPress';
 import useMount from './hooks/useMount';
@@ -17,6 +19,8 @@ function App() {
   useMount(() => {
     console.log('ეს ეშვება 1x');
   });
+
+  const [timerMounted, setTimerMounted] = useState(false);
 
   return (
     <div>
@@ -37,6 +41,14 @@ function App() {
       >
         decrement
       </button>
+      <button
+        onClick={() => {
+          setTimerMounted((current) => !current);
+        }}
+      >
+        {timerMounted && 'un'}mount
+      </button>
+      {timerMounted && <TimerComponent />}
     </div>
   );
 }
