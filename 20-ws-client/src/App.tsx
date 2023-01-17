@@ -44,9 +44,9 @@ function App() {
     <div className="App">
       <button onClick={() => {
         connectionRef.current?.send(
-          {
+          JSON.stringify({
             clientName: 'Zura'
-          }
+          })
         )
       }}>
         send something to ws
